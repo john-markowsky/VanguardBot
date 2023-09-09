@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome to VanguardBot, {{ user.app_username }}!</h1>
+    
+    <!-- Button to redirect to profile page -->
+    <a href="/profile" class="button">Link Your Vanguard Account</a>
+
+    <div class="header">
+        <!-- Display total amounts in the account. (You can calculate this on the backend or frontend) -->
+        <p>Total Amount: $<!-- Total Amount Here --></p>
+    </div>
+
+    <!-- New Equity Form -->
+    <form action="/buy-equity" method="post">
+        <input type="text" name="symbol" placeholder="Equity Symbol">
+        <input type="number" step="0.01" name="price" placeholder="Price">
+        <input type="number" name="quantity" placeholder="Quantity">
+        <button type="submit" class="button">Buy New Equity</button>
+    </form>
+
+    <!-- Account Information -->
+    <div class="tabs">
+        <!-- Tab-based interface for accounts -->
+        {% for account in accounts %}
+        <div class="tab">
+            <!-- Display equities in a table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Shares</th>
+                        <th>Total</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for equity in account.equities %}
+                    <tr>
+                        <td>{{ equity.symbol }}</td>
+                        <td>{{ equity.name }}</td>
+                        <td>{{ equity.price }}</td>
+                        <td>{{ equity.shares }}</td>
+                        <td>{{ equity.total }}</td>
+                        <td>
+                            <button>Buy</button>
+                            <button>Sell</button>
+                            <button>Set Stop Loss</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

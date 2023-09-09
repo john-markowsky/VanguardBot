@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <img src="/static/logos/v.jpg" class="ui image logo-image-large" href="/">
+    <h1>Welcome to VanguardBot</h1>
+    <p>
+        VanguardBot allows you to quickly manage your Vanguard portfolio.
+    </p>
+    {% if error_message %}
+        <div class="error-box">
+            {{ error_message }}
+        </div>
+    {% endif %}
+
+    <form action="/login" method="post">
+        <input class="input-field" type="text" name="username" placeholder="VanguardBot Username">
+        <input class="input-field" type="password" name="password" placeholder="VanguardBot Password">
+        <p>Don't have an account? <a href="/register" style="color: #b00000;">Register Here</a></p>
+        <button class="button" type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}

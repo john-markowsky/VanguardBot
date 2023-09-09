@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <img src="/static/logos/v.jpg" class="ui image logo-image-large" href="/">
+    <h1>Welcome to VanguardBot</h1>
+    <p>
+        This application allows you to quickly manage your Vanguard portfolio.
+    </p>
+    <form action="/login" method="post">
+        <input class="input-field" type="text" name="username" placeholder="Vanguard Username">
+        <input class="input-field" type="password" name="password" placeholder="Vanguard Password">
+        <button class="button" type="submit">Login</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <img src="/static/logos/v.jpg" class="ui image logo-image-large" href="/">
+    <h1>Welcome to VanguardBot</h1>
+    <p>
+        VanguardBot allows you to quickly manage your Vanguard portfolio.
+    </p>
+    {% if error_message %}
+        <div class="error-box">
+            {{ error_message }}
+        </div>
+    {% endif %}
+    <form action="/register" method="post" onsubmit="return validateForm()">
+        <input class="input-field" type="text" name="app_username" placeholder="Choose a Username">
+        <input class="input-field" type="password" id="app_hashed_password" name="app_hashed_password" placeholder="Choose a Password">
+        <input class="input-field" type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
+        <p>Already have an account? <a href="/login" style="color: #b00000;">Login Here</a></p>
+        <button class="button" type="submit">Register</button>
+    </form>
+    <script>
+        function validateForm() {
+            var password = document.getElementById("app_hashed_password").value;
+            var confirmPassword = document.getElementById("password_confirmation").value;
+            if (password !== confirmPassword) {
+                alert("Passwords do not match.");
+                return false;
+            }
+            return true;
+        }
+    </script>
+</div>
+{% endblock %}

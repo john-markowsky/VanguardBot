@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>VanguardBot</title>
+     <!-- Favicon -->
+     <link rel="icon" type="image/x-icon" href="/static/logos/favicon.ico">
+    <!-- Semantic UI CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="/static/css/base.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="ui inverted menu">
+        <div class="header item">
+            <!-- Logo and website title -->
+            <img src="/static/logos/v.jpg" class="ui image logo-image" href="/">
+            <span>VanguardBot</span>
+        </div>
+        <!-- Navigation links -->
+        <a class="item nav-item" href="/">Home</a>
+        <a class="item nav-item" href="/about">About</a>
+        <a class="item nav-item" href="mailto:info@vanguardbot.com">Contact</a>
+        <div class="right menu">
+            {% if user %}
+            <div class="ui dropdown item">
+                Hello, {{ user.app_username }}
+                <i class="dropdown icon"></i>
+                <div class="menu">
+                    <a class="item" href="/">Home</a>
+                    <a class="item" href="/profile">Profile</a>
+                    <a class="item" href="/dashboard">Dashboard</a>
+                    <a class="item" href="/logout">Logout</a>
+                </div>
+            </div>
+        {% else %}
+            <a class="item nav-item" href="/login">Login</a>
+            <a class="item nav-item" href="/register">Register</a>
+        {% endif %}
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="ui container segment">
+        {% block content %}{% endblock %}
+    </div>
+    <!-- Footer -->
+    <div class="ui container footer">
+        <p>2023 VanguardBot. All rights reserved.</p>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Semantic UI JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <!-- Your custom JavaScript -->
+    <script>
+        $(document).ready(function() {
+            $('.ui.dropdown').dropdown();
+        });
+    </script>
+</body>
+</html>

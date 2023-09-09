@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="ui grid">
+  <div class="sixteen wide column">
+    <div class="ui container error">
+        <img src="/static/logos/v.jpg" class="ui image logo-image-large" href="/">
+      <div class="ui message">
+        <div class="header">Error</div>
+        <p style="font-weight: bold;">{{ detail }}</p> <!-- Make the text bold -->
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

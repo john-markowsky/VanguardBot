@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 24px 0;
+    text-align: center;
+    border-bottom: 2px solid #d00000;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.main-content {
+    padding: 20px 0;
+}
+
+.footer {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 2px solid #d00000;
+}
+
+.button {
+    padding: 8px 16px;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #d00000;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px; 
+}
+
+
+.button:hover {
+    background-color: #b00000;
+    color: #ffffff;
+}
+
+.input-field {
+    padding: 10px;
+    border: 1px solid #d00000;
+    border-radius: 4px; 
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logo-image {
+    width: 25px; 
+    height: auto;
+}
+
+.logo-image-large {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70px; 
+    height: auto;
+}
+
+.error-box {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+
+/* The modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black with a bit of opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* 5% from the top and centered */
+    padding: 20px;
+    border: 1px solid #b00000;
+    width: 30%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Add the following CSS rule for the error message */
+.error .ui.message {
+    font-weight: bold;
+    text-align: center; /* Center the text */
+}

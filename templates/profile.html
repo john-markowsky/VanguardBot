@@ -1,0 +1,147 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+    <h3>VanguardBot Account</h3>
+    <form action="/update-profile" method="post">
+        <label for="username">Username:</label>
+        <input type="text" name="username" value="{{ user.app_username }}" required>
+
+        <label for="password">Current Password:</label>
+        <input type="password" name="password" required>
+        
+        <label for="new_password">New Password:</label>
+        <input type="password" name="new_password">
+
+        <input type="submit" class="button" value="Change Password" style="margin-left: 20px;">
+
+        {% if vanguard_accounts|length > 0 %}
+        <h3>Vanguard Accounts</h3>
+        {% for account in vanguard_accounts %}
+            <div class="vanguard-account">
+                <label for="vanguard_username_{{ loop.index }}">Vanguard Account:</label>
+                <input type="text" id="vanguard_username_{{ loop.index }}" value="{{ account.vanguard_username }}" readonly>
+        
+                <button type="button" class="button edit-button" onclick="editPassword({{ loop.index }})">Edit Password</button>
+                <button type="button" class="button delete-button" onclick="deleteAccount({{ loop.index }})">Delete Account</button>
+            </div>
+        {% endfor %}
+        {% endif %}
+    </form>
+
+    <button id="addNewAccountBtn" class="button">Add New Account</button>
+
+    <div id="vanguardModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Add Vanguard Account</h3>
+    
+            <div class="input-field" style="border: none; border-radius: 0;"> 
+                <label for="vanguardUsername">Vanguard Username:</label>
+                <input type="text" id="vanguardUsername" required>
+            </div>
+    
+            <div class="input-field" style="border: none; border-radius: 0;"> 
+                <label for="vanguardPassword">Vanguard Password:</label>
+                <input type="password" id="vanguardPassword" required>
+            </div>
+    
+            <div id="2faSection" style="display: block;">
+                <label for="twoFaCode">2FA Code:</label>
+                <input type="text" id="twoFaCode" style="margin-left: 0;">
+            </div>
+    
+            <div id="statusMessage" style="color: #b00000; margin-top: 10px;"></div>
+    
+            <button id="submitInitialLogin" class="button">Submit Initial Login</button>
+            <button id="submit2FA" class="button" style="display: none;">Submit 2FA</button>
+        </div>
+    </div>    
+
+    <script>
+        window.onload = function() {
+            var modal = document.getElementById("vanguardModal");
+            var closeBtn = document.getElementsByClassName("close")[0];
+            
+            if ("{{ vanguard_accounts|length > 0 }}" === "False") {
+                modal.style.display = "block";
+            }
+
+            closeBtn.onclick = function() {
+                modal.style.display = "none";
+            };
+
+            document.getElementById("addNewAccountBtn").addEventListener('click', function() {
+                modal.style.display = "block";
+            });
+            
+            document.getElementById("submitInitialLogin").addEventListener('click', handleInitialLogin);
+            document.getElementById("submit2FA").addEventListener('click', handle2FA);
+        };
+
+        async function handleInitialLogin() {
+            var submitButton = document.getElementById("submitInitialLogin");
+            submitButton.disabled = true;
+            document.getElementById("statusMessage").innerText = "Processing Vanguard login...";
+    
+            const username = document.getElementById("vanguardUsername").value;
+            const password = document.getElementById("vanguardPassword").value;
+    
+            const endPoint = "/vanguard-login/";
+    
+            const response = await fetch(endPoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `username=${username}&password=${password}`
+            });
+    
+            const data = await response.json();
+    
+            if (data.status === "awaiting_2fa") {
+                document.getElementById("statusMessage").innerText = "Please enter 2FA code.";
+                document.getElementById("2faSection").style.display = "block";
+                document.getElementById("submitInitialLogin").style.display = "none";
+                document.getElementById("submit2FA").style.display = "block";
+            } else if (data.status === "error") {
+                document.getElementById("statusMessage").innerText = data.message;
+            } else {
+                document.getElementById("statusMessage").innerText = "Successfully logged into Vanguard.";
+                modal.style.display = "none";
+            }
+    
+            submitButton.disabled = false;
+        }
+    
+        async function handle2FA() {
+            var submitButton = document.getElementById("submit2FA");
+            submitButton.disabled = true;
+    
+            document.getElementById("statusMessage").innerText = "Processing 2FA...";
+    
+            const twoFaCode = document.getElementById("twoFaCode").value;
+    
+            const endPoint = "/vanguard-2fa/";
+    
+            const response = await fetch(endPoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: `two_fa_code=${twoFaCode}`
+            });
+    
+            const data = await response.json();
+    
+            if (data.status === "success") {
+                document.getElementById("statusMessage").innerText = "Successfully logged into Vanguard. Account connected.";
+                modal.style.display = "none";
+            } else if (data.status === "error") {
+                document.getElementById("statusMessage").innerText = data.message;
+            }
+    
+            submitButton.disabled = false;
+        }
+    </script>
+{% endblock %}
